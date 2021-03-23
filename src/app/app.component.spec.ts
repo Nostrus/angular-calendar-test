@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { AppComponent } from './app.component';
+import { momentAdapterFactory } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      declarations: [AppComponent],
+      imports: [
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: momentAdapterFactory,
+        }),
       ],
     }).compileComponents();
   });
@@ -26,6 +32,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('calendar-test app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain(
+      'calendar-test app is running!'
+    );
   });
 });
